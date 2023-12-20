@@ -5,7 +5,7 @@ defaultEmbedColor=discord.Color(0xe67e22)
 green = discord.Color(0x00FF00)
 red = discord.Color(0xFF0000)
 
-class test(commands.Cog):
+class cogName(commands.Cog):
     description=""
     def __init__(self,bot):
         self.bot = bot
@@ -13,4 +13,4 @@ class test(commands.Cog):
     # Print code here
 
 async def setup(bot):
-	await bot.add_cog(test(bot))
+	await bot.add_cog(cogName(bot))
