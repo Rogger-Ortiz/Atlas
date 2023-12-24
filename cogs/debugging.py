@@ -47,7 +47,7 @@ class debugging(commands.Cog):
     @commands.command(name="ping", hidden=True)
     async def ping(self, ctx):
          if RJisAuthor(ctx):
-              await ctx.reply("pong!")
+              await ctx.reply("pong!!!")
               
 
 async def setup(bot):
