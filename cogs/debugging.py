@@ -37,11 +37,16 @@ class debugging(commands.Cog):
                    print("Can't update PTB this way!!!")
                    return
               if platform.system() == "Linux":
-                   ctx.reply("Updating, please allow me 5 seconds to reboot...")
+                   await ctx.reply("Updating, please allow me 5 seconds to reboot...")
                    os.system(f"./updateATL {os.getpid()}")
                    exit()
          else:
               return
+    
+    @commands.command(name="ping", hidden=True)
+    async def ping(self, ctx):
+         if RJisAuthor(ctx):
+              await ctx.reply("pong!")
               
 
 async def setup(bot):
