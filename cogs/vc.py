@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import json
+import os
 
 defaultEmbedColor=discord.Color(0xe67e22)
 green = discord.Color(0x00FF00)

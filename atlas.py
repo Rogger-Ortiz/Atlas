@@ -13,7 +13,8 @@ bot.remove_command('help')
 # Define all of the cogs here (comment out what you won't use)
 cogs = [
     'cogs.help',
-    'cogs.vc'
+    'cogs.vc',
+    'cogs.debugging'
 ]
 
 # Loads all of the cogs into the bot
