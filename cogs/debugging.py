@@ -38,6 +38,7 @@ class debugging(commands.Cog):
                    return
               if platform.system() == "Linux":
                    await ctx.reply("Updating, please allow me 5 seconds to reboot...")
+                   print(f"### PID: {os.getpid()}")
                    os.system(f"./updateATL {os.getpid()}")
                    exit()
          else:
@@ -46,7 +47,7 @@ class debugging(commands.Cog):
     @commands.command(name="ping", hidden=True)
     async def ping(self, ctx):
          if RJisAuthor(ctx):
-              await ctx.reply("pong!")
+              await ctx.reply("pong 2!")
               
 
 async def setup(bot):
