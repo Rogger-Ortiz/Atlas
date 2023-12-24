@@ -39,7 +39,7 @@ class debugging(commands.Cog):
               if platform.system() == "Linux":
                    await ctx.reply("Updating, please allow me 5 seconds to reboot...")
                    print(f"### PID: {os.getpid()}")
-                   os.system(f"./updateATL {os.getpid()}")
+                   os.system(f"./updateATL.sh {os.getpid()}")
                    exit()
          else:
               return
