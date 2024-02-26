@@ -7,6 +7,8 @@ import os
 defaultEmbedColor=discord.Color(0xe67e22)
 green = discord.Color(0x00FF00)
 red = discord.Color(0xFF0000)
+checkmark = ":white_check_mark:"
+xmark = ":x:"
 
 # Check if I am the author
 def RJisAuthor(ctx):

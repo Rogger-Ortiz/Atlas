@@ -14,7 +14,8 @@ bot.remove_command('help')
 cogs = [
     'cogs.help',
     'cogs.vc',
-    'cogs.debugging'
+    'cogs.debugging',
+    'cogs.youtube'
 ]
 
 # Loads all of the cogs into the bot
