@@ -3,3 +3,6 @@ updateATL.bat
 
 # Ignore my testing file.
 test.py
+
+# Ignore venv
+env/
