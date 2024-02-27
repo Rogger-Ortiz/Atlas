@@ -15,7 +15,8 @@ cogs = [
     'cogs.help',
     'cogs.vc',
     'cogs.debugging',
-    'cogs.youtube'
+    'cogs.youtube',
+    'cogs.moderation'
 ]
 
 # Loads all of the cogs into the bot
