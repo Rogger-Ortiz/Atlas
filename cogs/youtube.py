@@ -7,7 +7,7 @@ import asyncio
 
 from pytube import YouTube as YT
 
-defaultEmbedColor=discord.Color(0xe67e22)
+defaultEmbedColor=discord.Color(0xb253d6)
 green = discord.Color(0x00FF00)
 red = discord.Color(0xFF0000)
 errEmbed = discord.Embed(color=defaultEmbedColor)
