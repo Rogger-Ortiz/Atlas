@@ -1,5 +1,5 @@
-# Ignore my remote update bash file.
-updateATL.sh
+# Ignore my remote update batch file.
+updateATL.bat
 
 # Ignore my testing file.
 test.py
