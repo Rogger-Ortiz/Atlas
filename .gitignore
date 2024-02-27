@@ -1,0 +1,5 @@
+# Ignore my remote update bash file.
+updateATL.sh
+
+# Ignore my testing file.
+test.py
