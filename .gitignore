@@ -1,9 +1,11 @@
-# Ignore my remote update batch/bash file.
+# Ignore these scripts:
 updateATL.bat
 updateATL.sh
 
-# Ignore my testing file.
+# Ignore these files:
 test.py
+badwords.json
+jest.py
 
-# Ignore venv
+# Ignore these folders:
 env/
