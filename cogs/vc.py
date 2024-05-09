@@ -134,7 +134,10 @@ class VoiceChannel(commands.Cog):
             with open("files/vcdata.json", "r") as readJson:
                 vcData = json.load(readJson)
                 # read in {MemberID: ChannelID} format
-                createdChannels = vcData[str(before.channel.guild.id)]["active"]
+                try:
+                    createdChannels = vcData[str(before.channel.guild.id)]["active"]
+                except KeyError:
+                    return
                 if before.channel.id in createdChannels.values() and before.channel.members == []:
                     # Pop the {Channel: Member} relationship from dict
                     popID = None
@@ -150,7 +153,6 @@ class VoiceChannel(commands.Cog):
             writeJson.close()
             readJson.close()
             return
-
 
 async def setup(bot):
 	await bot.add_cog(VoiceChannel(bot))

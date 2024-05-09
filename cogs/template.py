@@ -14,6 +14,6 @@ class cogName(commands.Cog):
         self.bot = bot
 
     # Print code here
-
+        
 async def setup(bot):
 	await bot.add_cog(cogName(bot))

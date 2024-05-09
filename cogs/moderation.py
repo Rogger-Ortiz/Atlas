@@ -19,7 +19,7 @@ class Moderation(commands.Cog):
      @has_permissions(administrator=True)
      async def moderation(self, ctx, setting=None, switch=None, channelID=None):
           successEmbed = discord.Embed(color=green, title="")
-          with open("files\moddata.json", "r") as readJson:
+          with open("files\\moddata.json", "r") as readJson:
                modData = json.load(readJson)
                match setting:
                     # Toggle the moderation on/off
@@ -71,7 +71,7 @@ class Moderation(commands.Cog):
                          await ctx.reply(embed=errEmbed)
                          readJson.close()
                          return
-          with open("files\moddata.json", "w") as writeJson:
+          with open("files\\moddata.json", "w") as writeJson:
                json.dump(modData, writeJson)
           writeJson.close()
           readJson.close()
@@ -190,7 +190,7 @@ class Moderation(commands.Cog):
                      break
           
           # Actioning process
-          modData = json.load(open("files\moddata.json", "r"))
+          modData = json.load(open("files\\moddata.json", "r"))
           if str(msg.guild.id) in modData:
                # Log if the server allows
                if "logging" in modData[str(msg.guild.id)]:

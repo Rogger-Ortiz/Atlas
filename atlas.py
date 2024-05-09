@@ -16,7 +16,9 @@ cogs = [
     'cogs.vc',
     'cogs.debugging',
     'cogs.youtube',
-    'cogs.moderation'
+    'cogs.moderation',
+    'cogs.profile',
+    #'cogs.test'
 ]
 
 # Loads all of the cogs into the bot
@@ -27,5 +29,12 @@ async def loadall():
 # Runs the function from before to load cogs
 asyncio.run(loadall())
 
-# Starts the bot
-bot.run(os.getenv("ATL_key"))
+@bot.event
+async def on_ready():
+    # Start the status change every hour.
+    profile = bot.get_cog("Profile")
+    profile.changeStatus.start()
+
+# Starts the bot (prod or dev)
+bot.run(os.getenv("ATL_prod_key"))
+#bot.run(os.getenv("ATL_dev_key"))

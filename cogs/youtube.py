@@ -15,7 +15,13 @@ queue = []
 
 downloadPath = os.getenv("ATL_yt_downloadPath")
 
+# Only The Campfire can execute these commands. Don't want to end up like Rhythm or Groovy.
+def isNotCampfire(ctx):
+    return ctx.guild.id not in [588386910951702550, 634782302068670494]
+
 def play_next(ctx):
+    if isNotCampfire(ctx):
+        return
     voice = ctx.message.guild.voice_client
     if len(queue) > 0:
         url = queue.pop(0)
@@ -33,6 +39,9 @@ class YouTube(commands.Cog):
     
     @commands.command(name="play", help="Plays a song in a voice channel given a YouTube link!", usage="[url]")
     async def play(self, ctx, url=None):
+        if isNotCampfire(ctx):
+            print("Not campfire!")
+            return
         if url==None or ("youtube.com" not in url and "youtu.be" not in url):
             await ctx.channel.send("Please enter a URL!")
             return
@@ -42,10 +51,10 @@ class YouTube(commands.Cog):
             voice = ctx.message.guild.voice_client
             if voice.is_playing():
                 queue.append(url)
-            queueEmbed.title="Video added to the queue!"
-            queueEmbed.description="View using $queue"
-            await ctx.send(embed=queueEmbed)
-            return
+                queueEmbed.title="Video added to the queue!"
+                queueEmbed.description="View using $queue"
+                await ctx.send(embed=queueEmbed)
+                return
         except:
             pass
         
@@ -53,9 +62,14 @@ class YouTube(commands.Cog):
         stream = yt.streams.get_by_itag(251)
         stream.download(output_path=downloadPath,filename="audio.mp3")
         source = discord.FFmpegPCMAudio(downloadPath+"\\audio.mp3")
-        try:
+
+        voice_client = discord.utils.get(ctx.bot.voice_clients, guild=ctx.message.guild)
+        if voice_client == None:
             vc = await ctx.author.voice.channel.connect()
-        except:
+        else:
+            vc = voice_client
+
+        if ctx.author.voice.channel == None:    
             errEmbed.title="Not in a voice channel!"
             errEmbed.description="Please enter a voice channel before trying to play something!"
             await ctx.send(embed=errEmbed)
@@ -69,6 +83,8 @@ class YouTube(commands.Cog):
 
     @commands.command(name="dc", aliases=["disconnect"], help="Disconnects bot from voice channel")
     async def dc(self, ctx):
+        if isNotCampfire(ctx):
+            return
         voice = ctx.message.guild.voice_client
         if voice.is_playing():
             voice.stop()
@@ -77,6 +93,8 @@ class YouTube(commands.Cog):
 
     @commands.command(name="pause", help="Pauses the song that is currently playing")
     async def pause(self, ctx):
+        if isNotCampfire(ctx):
+            return
         voice = ctx.message.guild.voice_client
         if not voice.is_playing():
             await ctx.send("Can't pause what is not playing!")
@@ -85,6 +103,8 @@ class YouTube(commands.Cog):
 
     @commands.command(name="resume", help="Resumes the song that is paused")
     async def resume(self, ctx):
+        if isNotCampfire(ctx):
+            return
         voice = ctx.message.guild.voice_client
         if not voice.is_paused():
             await ctx.send("Can't resume what is not paused!")
@@ -93,6 +113,8 @@ class YouTube(commands.Cog):
 
     @commands.command(name="queue", help="Views the queue of songs to play")
     async def queue(self, ctx):
+        if isNotCampfire(ctx):
+            return
         voice = ctx.message.guild.voice_client
         queueEmbed=discord.Embed(color=defaultEmbedColor)
         if len(queue) == 0:
@@ -111,6 +133,8 @@ class YouTube(commands.Cog):
 
     @commands.command(name="remove", help="Removes a song based on its queue position", usage="[queue number]")
     async def pop(self, ctx, num):
+        if isNotCampfire(ctx):
+            return
         popEmbed = discord.Embed(color=defaultEmbedColor)
         url = queue.pop(int(num)-1)
         title = YT(url).title
@@ -121,6 +145,8 @@ class YouTube(commands.Cog):
 
     @commands.command(name="skip", help="Skips the current song, and plays the next in queue, if available")
     async def skip(self, ctx):
+        if isNotCampfire(ctx):
+            return
         skipEmbed = discord.Embed(color=defaultEmbedColor)
         voice = ctx.message.guild.voice_client
         if not voice.is_playing():
