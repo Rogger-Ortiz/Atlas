@@ -35,6 +35,5 @@ async def on_ready():
     profile = bot.get_cog("Profile")
     profile.changeStatus.start()
 
-# Starts the bot (prod or dev)
-bot.run(os.getenv("ATL_prod_key"))
-#bot.run(os.getenv("ATL_dev_key"))
+# Starts the bot
+bot.run(os.getenv("ATL_key"))
