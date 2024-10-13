@@ -26,7 +26,7 @@ class debugging(commands.Cog):
     async def shutdown(self, ctx):
         if RJisAuthor(ctx):
             # Quit
-            await ctx.reply("Goodbye!")
+            await ctx.reply("byegood!")
             exit()
         else:
             return
