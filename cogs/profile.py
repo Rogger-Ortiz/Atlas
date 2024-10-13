@@ -19,7 +19,7 @@ async def setStatus(self):
         case 1:
             await self.bot.change_presence(activity=discord.Game(name="with the stars."))
         case 2:
-            await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="to the wind."))
+            await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="the wind."))
         case 3:
             await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="over all."))
     return
