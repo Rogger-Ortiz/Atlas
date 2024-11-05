@@ -52,14 +52,14 @@ class VoiceChannel(commands.Cog):
                     return
                 
                 # Set trigger channel after all checks pass
-                with open("files/vcdata.json", "r") as readJson:
+                with open("Atlas/files/vcdata.json", "r") as readJson:
                     # Check if data exists. If not, make it.
                     vcData = json.load(readJson)
                     try:
                         vcData[str(ctx.guild.id)]["trigger"] = config
                     except:
                         vcData[str(ctx.guild.id)] = {"trigger": config, "active": {}}
-                with open("files/vcdata.json", "w") as  writeJson: 
+                with open("Atlas/files/vcdata.json", "w") as  writeJson: 
                     json.dump(vcData, writeJson)
                 writeJson.close()
                 readJson.close()
@@ -68,7 +68,7 @@ class VoiceChannel(commands.Cog):
                 return
         
         # Change VC name if all above checks complete
-        with open("files/vcdata.json", "r") as readJson:
+        with open("Atlas/files/vcdata.json", "r") as readJson:
             vcData = json.load(readJson)
             try:
                 # Update name if applicable
@@ -78,7 +78,7 @@ class VoiceChannel(commands.Cog):
                 errorEmbed = discord.Embed(color=red, title=f"{xmark} No Trigger Channel set!", description="Ask an admin to run \"$vcname config [Channel ID]\" before setting any channel names!")
                 await ctx.reply(embed=errorEmbed)
                 return
-        with open("files/vcdata.json", "w") as writeJson:
+        with open("Atlas/files/vcdata.json", "w") as writeJson:
             json.dump(vcData, writeJson)
         writeJson.close()
         readJson.close()
@@ -91,7 +91,7 @@ class VoiceChannel(commands.Cog):
     async def on_voice_state_update(self, member, before, after):
         if after.channel is not None:
             # Check if they joined trigger channel
-            with open("files/vcdata.json", "r") as readJson:
+            with open("Atlas/files/vcdata.json", "r") as readJson:
                 vcData = json.load(readJson)
                 try:
                     triggerID = vcData[str(after.channel.guild.id)]["trigger"]
@@ -123,7 +123,7 @@ class VoiceChannel(commands.Cog):
                         newChannel = await guild.create_voice_channel(vcName, category=category)
                         vcData[str(guild.id)]["active"][str(member.id)] = newChannel.id
                         await member.move_to(newChannel)
-            with open("files/vcdata.json", "w") as writeJson:
+            with open("Atlas/files/vcdata.json", "w") as writeJson:
                 json.dump(vcData, writeJson)
             writeJson.close()
             readJson.close()
@@ -131,7 +131,7 @@ class VoiceChannel(commands.Cog):
 
         if before.channel is not None:
             # Check if they left a created channel, and if its empty
-            with open("files/vcdata.json", "r") as readJson:
+            with open("Atlas/files/vcdata.json", "r") as readJson:
                 vcData = json.load(readJson)
                 # read in {MemberID: ChannelID} format
                 try:
@@ -148,7 +148,7 @@ class VoiceChannel(commands.Cog):
                     vcData[str(before.channel.guild.id)]["active"].pop(str(popID))
                     await before.channel.delete()
             
-            with open("files/vcdata.json", "w") as writeJson:
+            with open("Atlas/files/vcdata.json", "w") as writeJson:
                 json.dump(vcData, writeJson)
             writeJson.close()
             readJson.close()
