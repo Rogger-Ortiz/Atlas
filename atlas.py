@@ -39,3 +39,4 @@ async def on_ready():
 
 # Starts the bot
 bot.run(os.getenv("ATL_key"))
+# If this exists everything is okay.
