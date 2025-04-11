@@ -5,7 +5,7 @@ import nest_asyncio
 import asyncio
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(dotenv_path="../.env")
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='$', intents=intents)
 
