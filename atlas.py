@@ -18,7 +18,7 @@ cogs = [
     'cogs.vc',
     'cogs.debugging',
     'cogs.youtube',
-    'cogs.moderation',
+    #'cogs.moderation',
     'cogs.profile',
     #'cogs.test'
 ]
@@ -37,6 +37,7 @@ async def on_ready():
     profile = bot.get_cog("Profile")
     profile.changeStatus.start()
 
+print(dict(os.environ))
 # Starts the bot
 bot.run(os.getenv("ATL_key"))
 # If this exists everything is okay.
