@@ -39,9 +39,8 @@ class debugging(commands.Cog):
                    print("Can't update PTB this way!!!")
                    return
               if platform.system() == "Linux":
-                   await ctx.reply("Updating, please allow me 5 seconds to reboot...")
-                   print(f"### PID: {os.getpid()}")
-                   os.system(f"./updateATL.sh {os.getpid()}")
+                   await ctx.reply("Updating, please allow me a minute to reboot...")
+                   os.system(f"systemctl restart atl.service")
                    exit()
          else:
               return

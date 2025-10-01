@@ -20,7 +20,8 @@ cogs = [
     'cogs.youtube',
     #'cogs.moderation',
     'cogs.profile',
-    #'cogs.test'
+    #'cogs.test',
+    'cogs.bis'
 ]
 
 # Loads all of the cogs into the bot
@@ -37,7 +38,6 @@ async def on_ready():
     profile = bot.get_cog("Profile")
     profile.changeStatus.start()
 
-print(dict(os.environ))
 # Starts the bot
 bot.run(os.getenv("ATL_key"))
 # If this exists everything is okay.
