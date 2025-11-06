@@ -7,6 +7,7 @@ green = discord.Color(0x00FF00)
 red = discord.Color(0xFF0000)
 checkmark = ":white_check_mark:"
 xmark = ":x:"
+whitelist = [1052076946210697256, 1063988726499381300, 1423041378559983678, 1416604703243898961, 1419724821780234343, 1436136828011937823]
 
 class VoiceChannel(commands.Cog):
     description = "Customize your custom VC name using:"
@@ -93,35 +94,26 @@ class VoiceChannel(commands.Cog):
             # Check if they joined trigger channel
             with open("files/vcdata.json", "r") as readJson:
                 vcData = json.load(readJson)
-                try:
-                    triggerID = vcData[str(after.channel.guild.id)]["trigger"]
-                except:
-                    # This can fail if a user leaves a vc before initial data is generated
-                    triggerID = None
-                if after.channel.id in triggerID:
+                if after.channel.id in [1052076946210697256, 1423041378559983678]:
                     # Move the user into their new VC, unless it exists, in which we move them to that VC instead.
                     guild = after.channel.guild
+                    category = after.channel.category
+                    active = after.channel.category.channels
                     try:
-                        vcName = vcData[str(guild.id)][str(member.id)]
+                        vcName = vcData[str(member.id)]
                     except:
                         vcName = member.display_name+"'s Channel"
-                    active = vcData[str(guild.id)]["active"]
-                    category = after.channel.category
+                    # Try to move them there, if there is a disconnect in data, we will raise an exception.
                     try:
-                        # Check to see if a channel of theirs already exists
-                        activeChannel = active[str(member.id)]
-                        activeChannel = guild.get_channel(activeChannel)
-                        # Try to move them there, if there is a disconnect in data, we will raise an exception.
-                        if activeChannel is not None:
-                            await member.move_to(activeChannel)
-                            return
-                        else:
-                            # In this case we must raise an exception to move to "except" clause
-                            raise discord.DiscordException()
+                        for channel in active:
+                            if channel.name == vcName:
+                                await member.move_to(channel)
+                            else:
+                                # In this case we must raise an exception to move to "except" clause
+                                raise discord.DiscordException()
                     except:
                         # Create a new channel, move the user, and log it.
                         newChannel = await guild.create_voice_channel(vcName, category=category)
-                        vcData[str(guild.id)]["active"][str(member.id)] = newChannel.id
                         await member.move_to(newChannel)
             with open("files/vcdata.json", "w") as writeJson:
                 json.dump(vcData, writeJson)
@@ -130,32 +122,10 @@ class VoiceChannel(commands.Cog):
             return
 
         if before.channel is not None:
-            if before.channel.id not in [1052076946210697256, 1063988726499381300, 1419724821780234343, 1416604703243898961, 1052076946210697256]:    
+            delete_vc = False
+            if before.channel.id not in whitelist:    
                 if before.channel.members == []:
                     delete_vc = True
-            '''
-            # Check if they left a created channel, and if its empty
-            with open("files/vcdata.json", "r") as readJson:
-                vcData = json.load(readJson)
-                # read in {MemberID: ChannelID} format
-                try:
-                    createdChannels = vcData[str(before.channel.guild.id)]["active"]
-                except KeyError:
-                    return
-                if before.channel.id in createdChannels.values() and before.channel.members == []:
-                    # Pop the {Channel: Member} relationship from dict
-                    popID = None
-                    for MemberID in createdChannels:
-                        if createdChannels[MemberID] == before.channel.id:
-                            popID = MemberID
-                            break
-                    vcData[str(before.channel.guild.id)]["active"].pop(str(popID))
-                    await before.channel.delete()
-            with open("files/vcdata.json", "w") as writeJson:
-                json.dump(vcData, writeJson)
-            writeJson.close()
-            readJson.close()
-            '''
             if delete_vc:
                 await before.channel.delete()
             return
