@@ -7,7 +7,9 @@ green = discord.Color(0x00FF00)
 red = discord.Color(0xFF0000)
 checkmark = ":white_check_mark:"
 xmark = ":x:"
-whitelist = [1052076946210697256, 1063988726499381300, 1423041378559983678, 1416604703243898961, 1419724821780234343, 1436136828011937823]
+
+#            "+"                   "Gaming n' Chill"   "Fantasy n' Chill"   "Shadowrealm"        "Raiding n' Chill"
+whitelist = [1052076946210697256, 1063988726499381300, 1416604703243898961, 1419724821780234343, 1436378695169478830]
 
 class VoiceChannel(commands.Cog):
     description = "Customize your custom VC name using:"
