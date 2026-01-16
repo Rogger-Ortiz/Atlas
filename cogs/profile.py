@@ -17,11 +17,11 @@ async def setStatus(self):
     choice = random.randint(1,3)
     match choice:
         case 1:
-            await self.bot.change_presence(activity=discord.Game(name="with the stars."))
+            await self.bot.change_presence(activity=discord.Game(name="Playing with the stars."))
         case 2:
-            await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="the wind."))
+            await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="Listening to the wind."))
         case 3:
-            await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="over all."))
+            await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Watching over all."))
     return
 
 
