@@ -8,8 +8,8 @@ red = discord.Color(0xFF0000)
 checkmark = ":white_check_mark:"
 xmark = ":x:"
 
-#            "+" (Campfire)          "+" (PTB)             "Gaming n' Chill"   "Fantasy n' Chill"   "Shadowrealm"        "Raiding n' Chill"    "Lightweight n' Chill"
-whitelist = [1052076946210697256, 1554622534295752734, 1063988726499381300, 1416604703243898961, 1419724821780234343, 1436378695169478830, 1554617198528430190]
+#            "+" (Campfire)       "+" (PTB)            "Gaming n' Chill"    "Fantasy n' Chill"   "Shadowrealm"        "Raiding n' Chill"   "Light n' Chill"     "Epic Channel"
+whitelist = [1052076946210697256, 1554622534295752734, 1063988726499381300, 1416604703243898961, 1419724821780234343, 1436378695169478830, 1554617198528430190, 1554628916558299146]
 
 class VoiceChannel(commands.Cog):
     description = "Customize your custom VC name using:"
@@ -102,7 +102,6 @@ class VoiceChannel(commands.Cog):
             with open("files/vcdata.json", "r") as readJson:
                 vcData = json.load(readJson)
                 if after.channel.id in [1052076946210697256, 1554622534295752734]:
-                    print("joined trigger channel")
 
                     # Move the user into their new VC, unless it exists, in which we move them to that VC instead.
                     guild = after.channel.guild
@@ -120,12 +119,11 @@ class VoiceChannel(commands.Cog):
                 json.dump(vcData, writeJson)
             writeJson.close()
             readJson.close()
-            return
 
         # Thanks Ash and Alex for being rubber duckies for fixing this part :P
         if before.channel is not None:
-            if before.channel.id not in whitelist:    
-                if before.channel.members == []:
+            if before.channel.id not in whitelist:
+                if len(before.channel.members) == 0:
                     await before.channel.delete()
         return
 
