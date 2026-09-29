@@ -8,8 +8,8 @@ red = discord.Color(0xFF0000)
 checkmark = ":white_check_mark:"
 xmark = ":x:"
 
-#            "+"                   "Gaming n' Chill"   "Fantasy n' Chill"   "Shadowrealm"        "Raiding n' Chill"
-whitelist = [1052076946210697256, 1063988726499381300, 1416604703243898961, 1419724821780234343, 1436378695169478830]
+#            "+" (Campfire)          "+" (PTB)             "Gaming n' Chill"   "Fantasy n' Chill"   "Shadowrealm"        "Raiding n' Chill"    "Lightweight n' Chill"
+whitelist = [1052076946210697256, 1554622534295752734, 1063988726499381300, 1416604703243898961, 1419724821780234343, 1436378695169478830, 1554617198528430190]
 
 class VoiceChannel(commands.Cog):
     description = "Customize your custom VC name using:"
@@ -33,12 +33,14 @@ class VoiceChannel(commands.Cog):
                 await ctx.reply(embed=errorEmbed)
                 return
             if config == None:
+
                 # Return error if no channel ID is supplied
                 print(type(config))
                 errorEmbed = discord.Embed(color=red, title="Please enter a valid Channel ID!", description="$vcname config [Channel ID]")
                 await ctx.reply(embed=errorEmbed)
                 return
             else:
+
                 # Attempt to take supplied ID and turn into readable int. If we cant do it, send it back.
                 try:
                     config = int(config)
@@ -61,7 +63,7 @@ class VoiceChannel(commands.Cog):
                     try:
                         vcData[str(ctx.guild.id)]["trigger"] = config
                     except:
-                        vcData[str(ctx.guild.id)] = {"trigger": config, "active": {}}
+                        vcData[str(ctx.guild.id)] = {"trigger": config}
                 with open("files/vcdata.json", "w") as  writeJson: 
                     json.dump(vcData, writeJson)
                 writeJson.close()
@@ -74,9 +76,11 @@ class VoiceChannel(commands.Cog):
         with open("files/vcdata.json", "r") as readJson:
             vcData = json.load(readJson)
             try:
+
                 # Update name if applicable
                 vcData[str(ctx.guild.id)][str(ctx.author.id)] = name
             except:
+
                 # If no record trigger channel set, reject
                 errorEmbed = discord.Embed(color=red, title=f"{xmark} No Trigger Channel set!", description="Ask an admin to run \"$vcname config [Channel ID]\" before setting any channel names!")
                 await ctx.reply(embed=errorEmbed)
@@ -93,44 +97,37 @@ class VoiceChannel(commands.Cog):
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
         if after.channel is not None:
+
             # Check if they joined trigger channel
             with open("files/vcdata.json", "r") as readJson:
                 vcData = json.load(readJson)
-                if after.channel.id in [1052076946210697256, 1423041378559983678]:
+                if after.channel.id in [1052076946210697256, 1554622534295752734]:
+                    print("joined trigger channel")
+
                     # Move the user into their new VC, unless it exists, in which we move them to that VC instead.
                     guild = after.channel.guild
                     category = after.channel.category
-                    active = after.channel.category.channels
                     try:
-                        vcName = vcData[str(member.id)]
+                        vcName = vcData[str(after.channel.guild.id)][str(member.id)]
                     except:
                         vcName = member.display_name+"'s Channel"
-                    # Try to move them there, if there is a disconnect in data, we will raise an exception.
-                    try:
-                        for channel in active:
-                            if channel.name == vcName:
-                                await member.move_to(channel)
-                            else:
-                                # In this case we must raise an exception to move to "except" clause
-                                raise discord.DiscordException()
-                    except:
-                        # Create a new channel, move the user, and log it.
-                        newChannel = await guild.create_voice_channel(vcName, category=category)
-                        await member.move_to(newChannel)
+
+                    # Create a new channel, move the user, and log it.
+                    newChannel = await guild.create_voice_channel(vcName, category=category)
+                    await member.move_to(newChannel)
+
             with open("files/vcdata.json", "w") as writeJson:
                 json.dump(vcData, writeJson)
             writeJson.close()
             readJson.close()
             return
 
+        # Thanks Ash and Alex for being rubber duckies for fixing this part :P
         if before.channel is not None:
-            delete_vc = False
             if before.channel.id not in whitelist:    
                 if before.channel.members == []:
-                    delete_vc = True
-            if delete_vc:
-                await before.channel.delete()
-            return
+                    await before.channel.delete()
+        return
 
 async def setup(bot):
 	await bot.add_cog(VoiceChannel(bot))
