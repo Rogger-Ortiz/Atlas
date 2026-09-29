@@ -32,7 +32,7 @@ current_bis = {
 }
 
 fru_bis = {
-     "pld":"https://xivgear.app/?page=bis|pld|ultimate|fru",
+     "pld":"https://xivgear.app/?page=bisp|ld|ultimate|fru",
      "war":"https://xivgear.app/#/bis/war/ultimate/fru",
      "drk":"https://xivgear.app/#/bis/drk/ultimate/fru",
      "gnb":"https://xivgear.app/#/bis/gnb/ultimates/fru",
