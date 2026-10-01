@@ -7,16 +7,28 @@ import asyncio
 import json
 
 #Any extra libaries go under THIS LINE to import on live version
+import sys
 
 defaultEmbedColor=discord.Color(0xe67e22)
 green = discord.Color(0x00FF00)
 red = discord.Color(0xFF0000)
-trtDir = "/home/captain/projects/atl/Atlas/files/trt/"
+#trtDir = "/home/captain/projects/atl/Atlas/files/trt/"
 #trtDir = "R:\\Projects\\Atlas\\files\\trt\\"
-trtChance = 0.05
+#trtChance = 0.05
 
-server_id = 588386910951702550
-channel_id = 588386911677186049 
+if sys.platform == "win32":
+    print("Halloween Event running on Windows ENV")
+    trtDir = "R:\\Projects\\Atlas\\files\\trt\\"
+    server_id = 634782302068670496
+    channel_id = 634782302068670496
+    trtChance = 0.4
+elif sys.platform.startswith("linux"):
+    print("Halloween Event running on Linux ENV")
+    trtDir = "/home/captain/projects/atl/Atlas/files/trt/"
+    server_id = 588386910951702550
+    channel_id = 588386911677186049
+    trtChance = 0.05
+
 num_trt = 40
 
 def bubbleSort(arr, arr2):
@@ -121,7 +133,7 @@ class TrickRTreat(commands.Cog):
                          counter+=1
                  sent_message = await channel.send(file=send_file, embed=trtEmbed)
                  try:
-                     message = await self.bot.wait_for('message', timeout=60.0, check=lambda message: trt in message.content)
+                     message = await self.bot.wait_for('message', timeout=60.0, check=lambda message: message.content.startswith(trt))
                      successEmbed = discord.Embed(color=defaultEmbedColor)
                      successEmbed.set_image(url=f'attachment://{file}')
                      successEmbed.title = "Happy Halloween!"
