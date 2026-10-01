@@ -13,16 +13,10 @@ green = discord.Color(0x00FF00)
 red = discord.Color(0xFF0000)
 #trtDir = "/home/captain/projects/atl/Atlas/files/trt/"
 trtDir = "R:\\Projects\\Atlas\\files\\trt\\"
-trtChance = 0.25
+trtChance = 0.05
 
-# Campfire
-#server_id = 588386910951702550
-#channel_id = 588386911677186049 
-
-# PTB
-server_id = 634782302068670494
-channel_id = 634782302068670496
-
+server_id = 588386910951702550
+channel_id = 588386911677186049 
 num_trt = 40
 
 def bubbleSort(arr, arr2):
