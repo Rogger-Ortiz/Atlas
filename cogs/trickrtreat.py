@@ -11,8 +11,8 @@ import json
 defaultEmbedColor=discord.Color(0xe67e22)
 green = discord.Color(0x00FF00)
 red = discord.Color(0xFF0000)
-#trtDir = "/home/captain/projects/atl/Atlas/files/trt/"
-trtDir = "R:\\Projects\\Atlas\\files\\trt\\"
+trtDir = "/home/captain/projects/atl/Atlas/files/trt/"
+#trtDir = "R:\\Projects\\Atlas\\files\\trt\\"
 trtChance = 0.05
 
 server_id = 588386910951702550
