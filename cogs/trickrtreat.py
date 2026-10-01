@@ -11,8 +11,8 @@ import json
 defaultEmbedColor=discord.Color(0xe67e22)
 green = discord.Color(0x00FF00)
 red = discord.Color(0xFF0000)
-trtDir = "/home/captain/projects/atl/Atlas/files/trt/"
-#trtDir = "R:\\Projects\\Atlas\\files\\trt\\"
+#trtDir = "/home/captain/projects/atl/Atlas/files/trt/"
+trtDir = "R:\\Projects\\Atlas\\files\\trt\\"
 trtChance = 0.05
 
 server_id = 588386910951702550
@@ -87,7 +87,7 @@ class TrickRTreat(commands.Cog):
             return
         if msg.channel.id == channel_id:
             chance = random()
-            #print(chance)
+            print(chance)
             if chance<trtChance:
                  trtEmbed = discord.Embed(color=defaultEmbedColor)
                  channel = self.bot.get_channel(channel_id)
@@ -121,7 +121,7 @@ class TrickRTreat(commands.Cog):
                          counter+=1
                  sent_message = await channel.send(file=send_file, embed=trtEmbed)
                  try:
-                     message = await self.bot.wait_for('message', timeout=60.0, check=lambda message: trt in message.content)
+                     message = await self.bot.wait_for('message', timeout=60.0, check=lambda message: trt in message.content[0:6])
                      successEmbed = discord.Embed(color=defaultEmbedColor)
                      successEmbed.set_image(url=f'attachment://{file}')
                      successEmbed.title = "Happy Halloween!"
@@ -193,10 +193,6 @@ class TrickRTreat(commands.Cog):
         lbEmbed.set_footer(text="Make sure to keep answering those doors!")
         await channel.send(embed=lbEmbed)
         
-
-
-
-
 
 async def setup(bot):
 	await bot.add_cog(TrickRTreat(bot))
