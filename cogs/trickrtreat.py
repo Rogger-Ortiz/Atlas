@@ -13,10 +13,16 @@ green = discord.Color(0x00FF00)
 red = discord.Color(0xFF0000)
 #trtDir = "/home/captain/projects/atl/Atlas/files/trt/"
 trtDir = "R:\\Projects\\Atlas\\files\\trt\\"
-trtChance = 0.05
+trtChance = 0.25
 
-server_id = 588386910951702550
-channel_id = 588386911677186049 
+# Campfire
+#server_id = 588386910951702550
+#channel_id = 588386911677186049 
+
+# PTB
+server_id = 634782302068670494
+channel_id = 634782302068670496
+
 num_trt = 40
 
 def bubbleSort(arr, arr2):
@@ -121,7 +127,7 @@ class TrickRTreat(commands.Cog):
                          counter+=1
                  sent_message = await channel.send(file=send_file, embed=trtEmbed)
                  try:
-                     message = await self.bot.wait_for('message', timeout=60.0, check=lambda message: trt in message.content[0:6])
+                     message = await self.bot.wait_for('message', timeout=60.0, check=lambda message: trt in message.content)
                      successEmbed = discord.Embed(color=defaultEmbedColor)
                      successEmbed.set_image(url=f'attachment://{file}')
                      successEmbed.title = "Happy Halloween!"
