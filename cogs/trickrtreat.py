@@ -8,13 +8,13 @@ import json
 
 #Any extra libaries go under THIS LINE to import on live version
 import sys
+from datetime import datetime
 
 defaultEmbedColor=discord.Color(0xe67e22)
 green = discord.Color(0x00FF00)
 red = discord.Color(0xFF0000)
-#trtDir = "/home/captain/projects/atl/Atlas/files/trt/"
-#trtDir = "R:\\Projects\\Atlas\\files\\trt\\"
-#trtChance = 0.05
+
+weekend_mult = 1
 
 if sys.platform == "win32":
     print("Halloween Event running on Windows ENV")
@@ -22,7 +22,8 @@ if sys.platform == "win32":
     server_id = 634782302068670496
     channel_id = 634782302068670496
     trtChance = 0.4
-elif sys.platform.startswith("linux"):
+
+if sys.platform.startswith("linux"):
     print("Halloween Event running on Linux ENV")
     trtDir = "/home/captain/projects/atl/Atlas/files/trt/"
     server_id = 588386910951702550
@@ -150,7 +151,16 @@ class TrickRTreat(commands.Cog):
                      data = json.load(file)
                      try:
                          amt = data[str(memID)]
-                         amt +=1
+
+                         # Calculate points to add
+                         today = datetime.now()
+                         is_weekend = today.isoweekday() in [6, 7]
+                         if is_weekend:
+                             weekend_mult = 2
+                         addedTotal = (1+item_val)*weekend_mult
+                         #print(f"gained {addedTotal} points")
+                         amt += addedTotal
+                         
                          entry = f"{{\"{memID}\": {amt}}}"
                          newEntry = json.loads(entry)
                          data.update(newEntry)
