@@ -6,6 +6,7 @@ updateATL.sh
 test.py
 badwords.json
 jest.py
+files/trt/leaderboard.json
 
 # Ignore these folders:
 env/

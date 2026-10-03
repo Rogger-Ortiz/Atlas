@@ -21,7 +21,7 @@ cogs = [
     #'cogs.moderation',
     'cogs.profile',
     #'cogs.test',
-    #'cogs.trickrtreat',
+    'cogs.trickrtreat',
     'cogs.bis'
 ]
 
