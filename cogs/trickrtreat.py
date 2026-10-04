@@ -14,8 +14,6 @@ defaultEmbedColor=discord.Color(0xe67e22)
 green = discord.Color(0x00FF00)
 red = discord.Color(0xFF0000)
 
-weekend_mult = 1
-
 if sys.platform == "win32":
     print("Halloween Event running on Windows ENV")
     trtDir = "R:\\Projects\\Atlas\\files\\trt\\"
@@ -135,32 +133,35 @@ class TrickRTreat(commands.Cog):
                  sent_message = await channel.send(file=send_file, embed=trtEmbed)
                  try:
                      message = await self.bot.wait_for('message', timeout=60.0, check=lambda message: message.content.startswith(trt))
+                     weekend_mult = 1
                      successEmbed = discord.Embed(color=defaultEmbedColor)
                      successEmbed.set_image(url=f'attachment://{file}')
                      successEmbed.title = "Happy Halloween!"
                      successEmbed.description = f"As a thank you for your kindess, they give {message.author.mention} one **{item[value][item_val]}**"
                      if item_val == 0:
-                         successEmbed.set_footer(text="This item is common. There's not much special about it. It has been added to your inventory.")
+                         successEmbed.set_footer(text="This item is common, worth 1 point. There's not much special about it. It has been added to your inventory.")
                      if item_val == 1:
-                         successEmbed.set_footer(text="This item is uncommon. You take note of its existence. It has been added to your inventory.")
+                         successEmbed.set_footer(text="This item is uncommon, worth 2 points. You take note of its existence. It has been added to your inventory.")
                      if item_val == 2:
-                         successEmbed.set_footer(text="This item is rare!. Beaming with happiness, you add it to your inventory.") 
+                         successEmbed.set_footer(text="This item is rare, worth 3 points!. Beaming with happiness, you add it to your inventory.") 
                      
                      memID = message.author.id
                      file = open(f'{trtDir}leaderboard.json', 'r+')
                      data = json.load(file)
+
+                     # Calculate points to add
+                     today = datetime.now().isoweekday()
+                     print(today)
+                     is_weekend = today in [5, 6]
+                     if is_weekend:
+                         print("its a weekend!")
+                         weekend_mult = 2
+                     addedTotal = (1+item_val)*weekend_mult
+                     
                      try:
                          amt = data[str(memID)]
-
-                         # Calculate points to add
-                         today = datetime.now()
-                         is_weekend = today.isoweekday() in [6, 7]
-                         if is_weekend:
-                             weekend_mult = 2
-                         addedTotal = (1+item_val)*weekend_mult
                          #print(f"gained {addedTotal} points")
                          amt += addedTotal
-                         
                          entry = f"{{\"{memID}\": {amt}}}"
                          newEntry = json.loads(entry)
                          data.update(newEntry)
@@ -169,7 +170,7 @@ class TrickRTreat(commands.Cog):
                          json.dump(data, file)
                          file.close()
                      except KeyError:
-                         entry = f"{{\"{memID}\": 1}}"
+                         entry = f"{{\"{memID}\": {addedTotal}}}"
                          newEntry = json.loads(entry)
                          data.update(newEntry)
                          file.truncate(0)
